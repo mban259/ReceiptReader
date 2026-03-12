@@ -3,6 +3,10 @@ import ollama
 from PIL import Image
 import io
 import ollama
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 prompt = """このレシート画像を解析し、生テキストを以下のJSONフォーマットで出力してください。
@@ -18,7 +22,7 @@ prompt = """このレシート画像を解析し、生テキストを以下のJS
 # prompt = "Analyze the receipt and output the result in JSON format with keys: store_name, date, items, total_amount."
 model = "qwen3.5:4b"
 
-client = ollama.Client("http://arch-usb:11434")
+client = ollama.Client(os.getenv("OLLAMA_URL", "http://localhost:11434"))
 
 
 def parse_receipt(image_bytes):
