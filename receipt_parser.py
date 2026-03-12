@@ -38,5 +38,14 @@ def parse_receipt(image_bytes):
     )
 
     raw_text = response['response']
-
-    return raw_text
+    # json部分を取り出す
+    start = raw_text.find('{')
+    end = raw_text.rfind('}') + 1
+    raw_text = raw_text[start:end]
+    # JSON判定
+    import json
+    try:
+        json.loads(raw_text)
+        return raw_text
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON response", "raw_text": raw_text}
