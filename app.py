@@ -8,6 +8,9 @@ st.title("ReceiptReader")
 files = st.file_uploader("Upload a receipt image", type=[
                          "jpg", "jpeg", "png"], accept_multiple_files=True)
 
+if "json_str" not in st.session_state:
+    st.session_state["json_str"] = ""
+
 if files:
     for uploaded_file in files:
         st.image(uploaded_file, caption="Uploaded Receipt")
@@ -49,10 +52,10 @@ if files:
         }
         
         # ダウンロードボタン
-        json_str = json.dumps(summary, ensure_ascii=False, indent=2)
-        st.download_button(
-            label="Download JSON",
-            data=json_str,
-            file_name="receipts_summary.json",
-            mime="application/json"
-        )
+        st.session_state["json_str"] = json.dumps(summary, ensure_ascii=False, indent=2)
+    st.download_button(
+        label="Download JSON",
+        data=st.session_state["json_str"],
+        file_name="receipts_summary.json",
+        mime="application/json",
+    )

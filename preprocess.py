@@ -10,7 +10,7 @@ def prepare_image(uploaded_file, max_size=(1024, 1024), threshold=96):
 
     
     # リサイズ
-    # img = img.resize((min(img.width, max_size[0]), min(img.height, max_size[1])), Image.Resampling.LANCZOS)
+    img = img.resize((min(img.width, max_size[0]), min(img.height, max_size[1])), Image.Resampling.LANCZOS)
     
     # RGB変換（JPEG保存用）
     # img = img.convert("RGB")
