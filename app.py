@@ -4,13 +4,16 @@ from receipt_parser import parse_receipt
 
 st.title("ReceiptReader")
 
-uploaded_file = st.file_uploader("Upload a receipt image", type=["jpg", "jpeg", "png"])
+files = st.file_uploader("Upload a receipt image", type=[
+                         "jpg", "jpeg", "png"], accept_multiple_files=True)
 
-if uploaded_file:
-    st.image(uploaded_file, caption="Uploaded Receipt")
-    processed_image = prepare_image(uploaded_file)
+if files:
+    for uploaded_file in files:
+        st.image(uploaded_file, caption="Uploaded Receipt")
 
-    if(st.button("Parse Receipt")):
-        st.image(processed_image, caption="Processed Receipt")
-        response = parse_receipt(processed_image)
-        st.write(response)
+    if st.button("Parse Receipts"):
+        for uploaded_file in files:
+            processed_image = prepare_image(uploaded_file)
+            response = parse_receipt(processed_image)
+            st.write(response)
+
